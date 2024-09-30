@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preinstall": "npx npm-force-resolutions"
+
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -17,7 +19,12 @@
     "react-dom": "^18.3.1",
     "react-scroll": "^1.9.0",
     "react-slidedown": "^2.4.7"
+    
   },
+  "resolutions": {
+    "react": "^18.3.1"
+  },
+  
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@types/react": "^18.3.3",
