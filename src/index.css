@@ -315,4 +315,18 @@
   }
 
   /*  END of Footer*/
+}.transition-all {
+  transition: all 0.3s ease;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.max-h-0 {
+  max-height: 0; /* This will collapse the height */
+}
+
+.max-h-40 {
+  max-height: 10rem; /* Adjust based on your content */
 }
