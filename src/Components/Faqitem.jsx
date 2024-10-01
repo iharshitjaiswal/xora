@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 
-const Faqitem = ({ item, index }) => {
+const FaqItem = ({ item, index }) => {
   const [activeId, setActiveId] = useState();
   const active = activeId === item.id;
 
@@ -60,4 +60,4 @@ const Faqitem = ({ item, index }) => {
   );
 };
 
-export default Faqitem;
+export default FaqItem;
