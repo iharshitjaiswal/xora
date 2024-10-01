@@ -1,18 +1,48 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Element } from "react-scroll";
 import { features, plans } from "../constants";
-import CountUp from "react-countup";
 import Button from "../Components/Button";
 
 const Pricing = () => {
   const [monthly, setMonthly] = useState(false);
+  const [prices, setPrices] = useState(plans.map((plan) => plan.priceMonthly)); // Store current prices for plans
+
+  // Smooth count-up/count-down effect without decimals
+  useEffect(() => {
+    const startPrices = prices; // Start from current prices
+    const endPrices = monthly
+      ? plans.map((plan) => plan.priceMonthly)
+      : plans.map((plan) => plan.priceYearly);
+
+    const duration = 300; // Duration in ms for the count-up/count-down effect
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1); // Ensure progress doesn't exceed 1
+
+      const newPrices = startPrices.map((startPrice, index) => {
+        const endPrice = endPrices[index];
+        // Calculate and round the price to the nearest whole number
+        return Math.round(startPrice + (endPrice - startPrice) * progress);
+      });
+
+      setPrices(newPrices);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate); // Continue animation if not yet done
+      }
+    };
+
+    requestAnimationFrame(animate); // Start animation
+  }, [monthly]);
 
   return (
     <section>
       <Element name="pricing">
         <div className="container">
-          <div className="max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2  bg-s1/50 pb-24 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-30 max-md:pt-16">
+          <div className="max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2 bg-s1/50 pb-24 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-30 max-md:pt-16">
             <h3 className="h3 max-lg:h4 max-md:h5 z-30 relative mx-auto mb-14 max-w-lg text-center text-p4 max-md:l1 max-sm:max-w-sm">
               Flexible pricing for teams of all
             </h3>
@@ -31,7 +61,7 @@ const Pricing = () => {
               </button>
               <div
                 className={clsx(
-                  "g4 rounded-14 before:h-100 pricing-head_btn_before  absolute left-2 top-2 h-[calc(100%-16px)] w-[calc(50%-8px)] overflow-hidden shadow-400 transition-transform duration-500",
+                  "g4 rounded-14 before:h-100 pricing-head_btn_before absolute left-2 top-2 h-[calc(100%-16px)] w-[calc(50%-8px)] overflow-hidden shadow-400 transition-transform duration-500",
                   !monthly && "translate-x-full"
                 )}
               />
@@ -54,7 +84,7 @@ const Pricing = () => {
             </div>
           </div>
           {/* plans */}
-          <div className="scroll-hide relative z-2 -mt-10 flex items-start lg:justify-center  max-xl:gap-6 max-xl:overflow-auto max-xl:pt-6 lg:pb-10">
+          <div className="scroll-hide relative z-2 -mt-10 flex items-start lg:justify-center max-xl:gap-6 max-xl:overflow-auto max-xl:pt-6 lg:pb-10">
             {plans.map((plan, index) => (
               <div
                 key={plan.id}
@@ -95,18 +125,11 @@ const Pricing = () => {
                   <div className="relative z-2 flex items-center justify-center">
                     <div
                       className={clsx(
-                        "h-num md:h-num-pricing  flex items-start",
+                        "h-num md:h-num-pricing flex items-start",
                         index === 1 ? "text-p3" : "text-p4"
                       )}
                     >
-                      $
-                      <CountUp
-                        start={plan.priceMonthly}
-                        end={monthly ? plan.priceMonthly : plan.priceYearly}
-                        duration={0.4}
-                        useEasing={false}
-                        preserveValue
-                      />
+                      ${prices[index]}
                     </div>
                     <div className="small-1 relative top-3 ml-1 uppercase">
                       /mo
@@ -115,8 +138,8 @@ const Pricing = () => {
                 </div>
                 <div
                   className={clsx(
-                    "body-1-pricing relative z-2  w-full border-b-s2 pb-6 text-center text-p4",
-                    index === 1 && " pb-10"
+                    "body-1-pricing relative z-2 w-full border-b-s2 pb-6 text-center text-p4",
+                    index === 1 && "pb-10"
                   )}
                 >
                   {plan.caption}
