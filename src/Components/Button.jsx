@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import React from "react";
-import { Marker } from "./Marker";
+import { Marker } from "./Marker.jsx";
 
 const Button = ({
   icon,
@@ -55,5 +54,4 @@ const Button = ({
     </button>
   );
 };
-
 export default Button;
