@@ -9,21 +9,18 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "preinstall": "npx npm-force-resolutions"
-
   },
   "dependencies": {
     "clsx": "^2.1.1",
     "prettier": "^3.3.3",
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-scroll": "^1.9.0"
-    
   },
-  
   "devDependencies": {
     "@eslint/js": "^9.9.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",
