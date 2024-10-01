@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { SlideDown } from "react-slidedown";
-import "react-slidedown/lib/slidedown.css";
 
 const Faqitem = ({ item, index }) => {
   const [activeId, setActiveId] = useState();
@@ -38,11 +36,17 @@ const Faqitem = ({ item, index }) => {
           <div className="g4 size-11/12 rounded-full shadow-300" />
         </div>
       </div>
-      <SlideDown>
-        {activeId === item.id && (
-          <div className="body-3 px-7 py-3.5">{item.answer}</div>
+
+      {/* Replacing SlideDown with CSS Transition */}
+      <div
+        className={clsx(
+          "transition-all duration-300 overflow-hidden",
+          active ? "max-h-40" : "max-h-0" // Adjust max-height as needed
         )}
-      </SlideDown>
+      >
+        <div className="body-3 px-7 py-3.5">{item.answer}</div>
+      </div>
+
       <div
         className={clsx(
           "g5 -bottom-7 -top-7 left-0 right-0 -z-1 rounded-3xl opacity-0 transition-opacity duration-500 absolute",
